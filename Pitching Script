@@ -1,10 +1,64 @@
+---
+title: "Pitching"
+author: "Ambar Mishra"
+date: "9/3/2020"
+output: html_document
+---
+
 subsetted_data<-head(Pitching_File,20)
 counts_1<- table(subsetted_data$yearID)
 barplot(counts_1, main='Years which players played',
         xlab='years', ylab='Amount of players',col=c('blue','red'))
-        
+
+#This graph is a perfect representation of the amount of players which played per year.  
+ 
 library(corrplot)       
 
 baseball_matrix<- as.matrix(subsetted_data[ , c(16:17)])
 par(ask=TRUE)
 corrplot(baseball_matrix,method='circle',is.corr = FALSE)
+#Corrplot takes too much time to load so i will fix this later
+
+plot(subsetted_data$H,subsetted_data$HR)
+
+#There is zero correlation with a player's amount of hits to the amount of home runs they hit. 
+# This is important since hits can be in any form such as singles, doubles or triples.
+
+subsetted_data_2<- head(subsetted_data,4)
+slices<- subsetted_data_2$H
+l<- subsetted_data_2$teamID
+percent<- round(slices/sum(slices)*100)
+l<- paste(l,percent)
+l<-paste(l,'%',sep='')
+pie(slices,labels=l, main='pie chart of homeruns per team in 1884')
+
+#Here is a small pie chart for home runs per team in 1884.
+
+library(plotrix)
+pie3D(slices,labels=l, main='pie chart of homeruns per team in 1884',explode= 0.4)
+
+#Explode helps separate the different slices of pie into different parts. 
+
+
+hist(subsetted_data$SO, col='blue', breaks=100)
+rug(subsetted_data$SO)
+
+Most of the strikeouts in the dataset were in the range 0-5. 
+
+
+#Here is another histogram, 
+#but we will add a abline to the center of the graph to see the data's distribution. 
+
+hist(subsetted_data$SO, col='green')
+abline(v=15, lwd=5)
+abline(v=median(subsetted_data$S0),col='red', lwd=10)
+
+
+
+boxplot(subsetted_data$ERA, col='red')
+abline(h=5)
+
+
+
+
+
