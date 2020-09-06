@@ -1,0 +1,10 @@
+subsetted_data<-head(Pitching_File,20)
+counts_1<- table(subsetted_data$yearID)
+barplot(counts_1, main='Years which players played',
+        xlab='years', ylab='Amount of players',col=c('blue','red'))
+        
+library(corrplot)       
+
+baseball_matrix<- as.matrix(subsetted_data[ , c(16:17)])
+par(ask=TRUE)
+corrplot(baseball_matrix,method='circle',is.corr = FALSE)
